@@ -60,7 +60,7 @@ Router.get('/showMovies', (req, res) => {
 Router.get('/showMovies/:idmovies', (req, res) => {
     console.log("REQ BODY", req.body)
     console.log("REQ PRAMS", req.params)
-    
+
     const id = [req.params.idmovies]
     const sql = 'SELECT * FROM movies WHERE idmovies = ?'
     connection.query(sql, id, (err, [movie]) => {
@@ -78,8 +78,8 @@ Router.put('/putMovies/:idmovies', (req, res) => {
     console.log("REQ BODY", req.body)
     console.log("REQ PARAMS:", req.params)
 
-   const id = req.params.idmovies
-   const put_sql =` 
+    const id = req.params.idmovies
+    const put_sql = ` 
    UPDATE movies 
    SET title = ?, 
    release_date = ?, 
@@ -92,7 +92,7 @@ Router.put('/putMovies/:idmovies', (req, res) => {
    poster = ?, 
    video = ? 
    WHERE idmovies = ? `
-   const values = [
+    const values = [
         req.body.title,
         req.body.release_date,
         req.body.director,
@@ -103,8 +103,8 @@ Router.put('/putMovies/:idmovies', (req, res) => {
         req.body.description,
         req.body.poster,
         req.body.video,
-        id   
-     ]
+        id
+    ]
     connection.query(put_sql, values, (err, data) => {
         if (err) {
             return res.send(err)
@@ -123,17 +123,17 @@ Router.delete('/deleteMovies/:idmovies', (req, res) => {
     console.log("REQ PARAMS", req.params)
     const id = req.params.idmovies
     const sql = `DELETE FROM movies WHERE idmovies = ?`
-    const values =[id]
+    const values = [id]
 
-    connection.query(sql, values,(err,results)=>{
-        if (err){
+    connection.query(sql, values, (err, results) => {
+        if (err) {
             res.send(err)
-        }else{
+        } else {
             return res.send(results)
         }
     })
- 
-    
+
+
 })
 
 module.exports = Router
